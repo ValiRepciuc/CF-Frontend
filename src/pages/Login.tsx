@@ -16,6 +16,11 @@ const Login = () => {
   );
   const [booting, setBooting] = useState<boolean>(false);
   //const [eventName, setEventName] = useState<string>("");
+  const [displayText, setDisplayText] = useState<string>("CodeFest");
+  const [fontFamily, setFontFamily] = useState<string>("Nura");
+  const [glitching, setGlitching] = useState<boolean>(false);
+
+
 
   const navigate = useNavigate();
 
@@ -53,6 +58,15 @@ const Login = () => {
     }
   };
 
+  const generateRandomText = (length: number) => {
+    const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+±";
+    let result = "";
+    for (let i = 0; i < length; i++) {
+      result += chars[Math.floor(Math.random() * chars.length)];
+    }
+    return result;
+  };
+
   useEffect(() => {
     const fetchEvent = async () => {
       try {
@@ -64,6 +78,28 @@ const Login = () => {
     };
 
     fetchEvent();
+
+    let randomGlitchTime = Math.floor(Math.random() * 10000) + 3000;
+
+    const interval = setInterval(() => {
+      setGlitching(true);
+      setFontFamily("VT323");
+
+      const glitchInterval = setInterval(() => {
+        setDisplayText(generateRandomText(8));
+      }, 100);
+
+      setTimeout(() => {
+        clearInterval(glitchInterval);
+        setGlitching(false);
+        setDisplayText("CodeFest");
+        setFontFamily("Nura");
+      }, 1000);
+    }, randomGlitchTime);
+
+    return () => {
+      clearInterval(interval);
+    };
   }, []);
 
   useEffect(() => {
@@ -89,20 +125,29 @@ const Login = () => {
         position={"absolute"}
         top={8}
         left={12}
-        fontFamily={"Nura"}
+        fontFamily={fontFamily}
         fontWeight={900}
-        fontSize={"5xl"}
+        fontSize={glitching ? "2xl" : "5xl"}
         color={"#646cff"}
+        animation={
+          glitching ? "smallShake 0.5s infinite" : "pulseGlow 2s infinite"
+        }
       >
-        CodeFest
+        {displayText}
       </Box>
       <Flex
         height={"100vh"}
         alignItems="center"
         justifyContent="center"
         bg={"1a1a1a"}
+        direction={"row"}
+        gap={10}
+        px={10}
       >
-        <Box p={8} mt={8} /*</Flex>border="2px solid black"*/>
+        <Box textAlign={"center"} border={"2px solid black"} flex={1}>
+          Salut!
+        </Box>
+        <Box p={8} mt={8} flex={1} /*</Flex>border="2px solid black"*/>
           <Heading
             fontFamily={"Nura"}
             fontWeight={900}
@@ -215,6 +260,9 @@ const Login = () => {
             />
           </Box>
         </Box>
+        <Box textAlign={"center"} border={"2px solid black"} flex={1}>
+          Al treilea card! Viitoare evenimente
+        </Box>
         <style>
           {`
           @keyframes fadeIn {
@@ -232,6 +280,24 @@ const Login = () => {
             50% {
               opacity: 0;
             }
+          }
+          @keyframes pulseGlow {
+            0% {
+              text-shadow: 0 0 5px #646cff, 0 0 10px #646cff;
+            }
+            50% {
+              text-shadow: 0 0 10px #535bf2;, 0 0 15px #535bf2;;
+            }
+            100% {
+              text-shadow: 0 0 5px #646cff, 0 0 10px #646cff;
+            }
+          }
+          @keyframes smallShake {
+            0% { transform: translateX(0); }
+            25% { transform: translateX(-2px); }
+            50% { transform: translateX(2px); }
+            75% { transform: translateX(-2px); }
+            100% { transform: translateX(0); }
           }
         `}
         </style>
