@@ -1,7 +1,7 @@
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { UserProvider } from "./context/useAuth";
-import Login from "./pages/Login";
+import Login from "./features/auth/pages/Login";
 
 function App() {
   return (

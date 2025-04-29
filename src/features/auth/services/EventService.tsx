@@ -1,5 +1,5 @@
 import axios from "axios";
-import { handleError } from "../helpers/ErrorHandler";
+import { handleError } from "../../../helpers/ErrorHandler";
 
 export const getCurrentEvent = async () => {
   try {
