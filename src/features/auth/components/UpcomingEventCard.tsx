@@ -1,5 +1,6 @@
 import { Box, Text } from "@chakra-ui/react";
 
+
 interface UpcomingEventCardProps {
   nextEvent: {
     name: string;
@@ -37,7 +38,7 @@ const UpcomingEventCard: React.FC<UpcomingEventCardProps> = ({ nextEvent }) => {
           )}"\n  }\n}`}
         </Box>
       ) : (
-        <Text>Momentan nu există evenimente viitoare.</Text>
+        <Text>Momentan nu exista evenimente viitoare.</Text>
       )}
       <Box
         as="span"

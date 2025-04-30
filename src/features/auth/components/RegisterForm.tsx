@@ -3,66 +3,81 @@ import { Checkbox } from "@chakra-ui/checkbox";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { loginAPI } from "../services/AuthService";
+import { registerAPI } from "../services/AuthService";
 
 interface Props {
-  bootMessages: string[];
-  booting: boolean;
-  setBooting: (b: boolean) => void;
+  registerMessages: string[];
+  register: boolean;
+  setRegister: (b: boolean) => void;
   terminal: boolean;
   setTerminal: (t: boolean) => void;
-  onSwitchToRegister: () => void;
+  onSwitchToLogin: () => void;
 }
 
-const LoginForm: React.FC<Props> = ({
-  bootMessages,
-  booting,
-  setBooting,
+const RegisterForm: React.FC<Props> = ({
+  registerMessages,
+  register,
+  setRegister,
   terminal,
   setTerminal,
-  onSwitchToRegister,
+  onSwitchToLogin,
 }) => {
   const navigate = useNavigate();
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [passwordMatch, setPasswordMatch] = useState(false);
+  const [email, setEmail] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
   const [bootIndex, setBootIndex] = useState(0);
-  const [loginStatus, setLoginStatus] = useState<"idle" | "success" | "error">(
-    "idle"
-  );
+  const [registerStatus, setRegisterStatus] = useState<
+    "idle" | "success" | "error"
+  >("idle");
 
-  const handleLogin = async (e: React.FormEvent) => {
+  const isValidEmail = (email: string) =>
+    /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+
+  const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      // Apelul API pentru login
-      const response = await loginAPI(username, password);
+      if (!isValidEmail(email)) {
+        toast.error("Adresa de email nu este validă.");
+        return;
+      }
+
+      if (password !== confirmPassword) {
+        toast.error("Parolele nu se potrivesc.");
+        return;
+      }
+
+      const response = await registerAPI(email, username, password);
       if (response) {
-        setBooting(true);
+        setRegister(true);
 
         setTimeout(() => {
-          setLoginStatus("success");
-          toast.success("Login successful!");
+          setRegisterStatus("success");
+          toast.success("Registration successful!");
           navigate("/dashboard");
         }, 2000);
       } else {
         setTimeout(() => {
-          setLoginStatus("error");
+          setRegisterStatus("error");
         }, 1500);
       }
     } catch (error: any) {
       setTimeout(() => {
-        toast.error("Login failed. Please check your credentials.");
+        toast.error("Registration failed. Please check your credentials.");
       }, 1500);
     }
   };
 
   useEffect(() => {
-    if (!booting) return;
+    if (!register) return;
 
     const interval = setInterval(() => {
       setBootIndex((prev) => {
-        if (prev < bootMessages.length) {
+        if (prev < registerMessages.length) {
           return prev + 1;
         } else {
           clearInterval(interval);
@@ -72,7 +87,12 @@ const LoginForm: React.FC<Props> = ({
     }, 500);
 
     return () => clearInterval(interval);
-  }, [booting]);
+  }, [register]);
+
+  useEffect(() => {
+    if (confirmPassword === "") return;
+    setPasswordMatch(password === confirmPassword);
+  }, [password, confirmPassword]);
 
   return (
     <Box p={8} mt={8} flex={1} /*</Flex>border="2px solid black"*/>
@@ -86,12 +106,28 @@ const LoginForm: React.FC<Props> = ({
         Welcome Back!
       </Heading>
       <form
-        onSubmit={handleLogin}
+        onSubmit={handleRegister}
         style={{
           width: "300px",
           margin: "0 auto",
         }}
       >
+        <Box mb="4">
+          <label htmlFor="email" style={{ color: "white" }}>
+            Email:
+          </label>
+          <Input
+            type="text"
+            id="username"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            onClick={() => setTerminal(true)}
+            mt="2"
+            bg="gray.700"
+            focusRingColor={"purple.500"}
+            color="white"
+          />
+        </Box>
         <Box mb="4">
           <label htmlFor="username" style={{ color: "white" }}>
             Username:
@@ -123,6 +159,29 @@ const LoginForm: React.FC<Props> = ({
             focusRingColor={"purple.500"}
             color="white"
           />
+          <Box mb="4">
+            <label htmlFor="password" style={{ color: "white" }}>
+              Confirm Password:
+            </label>
+            <Input
+              type="password"
+              id="confirmPassword"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              onClick={() => setTerminal(true)}
+              mt="2"
+              bg="gray.700"
+              focusRingColor={"purple.500"}
+              color="white"
+            />
+          </Box>
+          <Box mb={4} textAlign={"center"} minH={"22px"}>
+            {!passwordMatch && confirmPassword && (
+              <Text color="red.500" fontSize="sm">
+                Parolele nu se potrivesc!
+              </Text>
+            )}
+          </Box>
         </Box>
         <Box mb="4" textAlign={"center"}>
           <Checkbox
@@ -141,8 +200,15 @@ const LoginForm: React.FC<Props> = ({
           bg={"#646cff"}
           width="full"
           _hover={{ bg: "#c800ff" }}
+          disabled={
+            !email ||
+            !username ||
+            !password ||
+            !confirmPassword ||
+            !passwordMatch
+          }
         >
-          Login
+          Register
         </Button>
         <Text
           mt={4}
@@ -151,9 +217,9 @@ const LoginForm: React.FC<Props> = ({
           textAlign="center"
           cursor="pointer"
           _hover={{ textDecoration: "underline" }}
-          onClick={onSwitchToRegister}
+          onClick={onSwitchToLogin}
         >
-          Nu ai cont? Creează unul
+          Ai deja cont? Autentifică-te
         </Text>
       </form>
 
@@ -174,16 +240,17 @@ const LoginForm: React.FC<Props> = ({
         transform={terminal ? "translateY(0)" : "translateY(10px)"}
         visibility={terminal ? "visible" : "hidden"}
       >
-        {">"} login {username || "[username]"}{" "}
+        {">"} register {email || "[email]"} {username || "[username]"}{" "}
         {password ? "*".repeat(password.length) : "[password]"}{" "}
         {rememberMe ? "--save" : ""}
-        {booting &&
-          bootMessages.slice(0, bootIndex).map((msg, idx) => (
+        {register &&
+          registerMessages.slice(0, bootIndex).map((msg, idx) => (
             <Text key={idx}>
               {">"} {msg}
             </Text>
           ))}
-        {loginStatus === "error" && ">" + "Login failed! Please try again..."}
+        {registerStatus === "error" &&
+          ">" + "Login failed! Please try again..."}
         <Box
           as="span"
           bg="#646cff"
@@ -198,4 +265,4 @@ const LoginForm: React.FC<Props> = ({
   );
 };
 
-export default LoginForm;
+export default RegisterForm;
