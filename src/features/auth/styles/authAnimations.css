@@ -71,3 +71,39 @@
     transform: translateX(0);
   }
 }
+
+.glitch {
+  animation: glitchFade 0.5s linear;
+}
+
+.glitch {
+  animation: glitchFade 0.5s ease-in-out;
+}
+
+@keyframes glitchFade {
+  0% {
+    filter: contrast(1.4) brightness(1.1);
+    transform: scale(0.98) translate(0px, 0px) rotate(0deg);
+    opacity: 0.8;
+  }
+  15% {
+    transform: scale(1.02) translate(-2px, 1px) rotate(-0.5deg);
+    opacity: 0.9;
+  }
+  35% {
+    transform: scale(0.99) translate(2px, -2px) rotate(0.5deg);
+    opacity: 1;
+  }
+  55% {
+    transform: scale(1.01) translate(-1px, 1px) rotate(-0.4deg);
+  }
+  75% {
+    transform: scale(1) translate(1px, -1px) rotate(0.2deg);
+    filter: contrast(1.2);
+  }
+  100% {
+    transform: scale(1) translate(0px, 0px) rotate(0deg);
+    filter: none;
+    opacity: 1;
+  }
+}

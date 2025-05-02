@@ -8,14 +8,22 @@ import { useGlitch } from "../hooks/useGlitch";
 import { useEvents } from "../hooks/useEvents";
 import "../styles/authAnimations.css";
 import LoginForm from "../components/LoginForm";
+import GlitchFormWrapper from "../components/GlitchFormWrapper";
 
 const Login = () => {
   const [terminal, setTerminal] = useState<boolean>(false);
   const [booting, setBooting] = useState<boolean>(false);
   const [register, setRegister] = useState<boolean>(false);
   const [isRegistered, setIsRegistered] = useState<boolean>(false);
+  const [formGlitching, setFormGlitching] = useState<boolean>(false);
 
-  const toogleForm = () => setIsRegistered((prev) => !prev);
+  const toogleForm = () => {
+    setFormGlitching(true);
+    setTimeout(() => {
+      setIsRegistered((prev) => !prev);
+      setFormGlitching(false);
+    }, 500); // poate fi și 300ms sau 700ms în funcție de cât vrei să dureze glitch-ul
+  };
 
   const bootMessages = [
     "Waking up the servers...",
@@ -53,7 +61,7 @@ const Login = () => {
           currentEvent={currentEvent}
           calculateEventProgress={calculateEventProgress}
         />
-        {isRegistered ? (
+        <GlitchFormWrapper isVisible={isRegistered} glitching={formGlitching}>
           <LoginForm
             bootMessages={bootMessages}
             booting={booting}
@@ -62,7 +70,9 @@ const Login = () => {
             setTerminal={setTerminal}
             onSwitchToRegister={toogleForm}
           />
-        ) : (
+        </GlitchFormWrapper>
+
+        <GlitchFormWrapper isVisible={!isRegistered} glitching={formGlitching}>
           <RegisterForm
             registerMessages={registerMessages}
             register={register}
@@ -71,7 +81,7 @@ const Login = () => {
             setTerminal={setTerminal}
             onSwitchToLogin={toogleForm}
           />
-        )}
+        </GlitchFormWrapper>
 
         <UpcomingEventCard nextEvent={nextEvent} />
       </Flex>

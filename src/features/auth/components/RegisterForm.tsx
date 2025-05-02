@@ -38,26 +38,42 @@ const RegisterForm: React.FC<Props> = ({
   const isValidEmail = (email: string) =>
     /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
+  const isValidPassword = (password: string) =>
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+[\]{};':"\\|,.<>/?])[A-Za-z\d!@#$%^&*()_+[\]{};':"\\|,.<>/?]{8,}$/.test(
+      password
+    );
+
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
+    let hasError = false;
+
+    if (!isValidEmail(email)) {
+      toast.error("Adresa de email nu este validă.");
+      hasError = true;
+    }
+
+    if (!isValidPassword(password)) {
+      toast.error(
+        "Parola trebuie să aiba cel putin 8 caractere, o majuscula, o minuscula, un caracter special si o cifra!"
+      );
+      hasError = true;
+    }
+
+    if (password !== confirmPassword) {
+      toast.error("Parolele nu se potrivesc.");
+      hasError = true;
+    }
+    if (hasError) {
+      return;
+    }
     try {
-      if (!isValidEmail(email)) {
-        toast.error("Adresa de email nu este validă.");
-        return;
-      }
-
-      if (password !== confirmPassword) {
-        toast.error("Parolele nu se potrivesc.");
-        return;
-      }
-
       const response = await registerAPI(email, username, password);
       if (response) {
         setRegister(true);
 
         setTimeout(() => {
           setRegisterStatus("success");
-          toast.success("Registration successful!");
+          toast.success("Inregistrare cu succes!");
           navigate("/dashboard");
         }, 2000);
       } else {
@@ -67,7 +83,7 @@ const RegisterForm: React.FC<Props> = ({
       }
     } catch (error: any) {
       setTimeout(() => {
-        toast.error("Registration failed. Please check your credentials.");
+        toast.error("Inregistrarea a esuat. Verificati.");
       }, 1500);
     }
   };
@@ -250,7 +266,7 @@ const RegisterForm: React.FC<Props> = ({
             </Text>
           ))}
         {registerStatus === "error" &&
-          ">" + "Login failed! Please try again..."}
+          "\n>" + " Inregistrarea a esuat! Te rog incearca din nou..."}
         <Box
           as="span"
           bg="#646cff"
