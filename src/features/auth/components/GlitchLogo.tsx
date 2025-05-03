@@ -14,7 +14,7 @@ const GlitchLogo: React.FC<GlitchLogoProps> = ({
   return (
     <Box
       position={"absolute"}
-      top={8}
+      top={4}
       left={12}
       fontFamily={fontFamily}
       fontWeight={900}

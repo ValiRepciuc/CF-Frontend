@@ -1,13 +1,13 @@
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { UserProvider } from "./context/useAuth";
-import Auth from "./features/auth/pages/Auth";
+import AppRouter from "./router/AppRouter";
 
 function App() {
   return (
     <>
       <UserProvider>
-        <Auth />
+        <AppRouter />
         <ToastContainer />
       </UserProvider>
     </>

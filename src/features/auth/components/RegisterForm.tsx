@@ -3,7 +3,7 @@ import { Checkbox } from "@chakra-ui/checkbox";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { registerAPI } from "../services/AuthService";
+import { useAuth } from "../../../context/useAuth";
 
 interface Props {
   registerMessages: string[];
@@ -43,6 +43,8 @@ const RegisterForm: React.FC<Props> = ({
       password
     );
 
+  const { registerUser } = useAuth();
+
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
     let hasError = false;
@@ -67,14 +69,14 @@ const RegisterForm: React.FC<Props> = ({
       return;
     }
     try {
-      const response = await registerAPI(email, username, password);
+      const response = await registerUser(email, username, password);
       if (response) {
         setRegister(true);
 
         setTimeout(() => {
           setRegisterStatus("success");
           toast.success("Inregistrare cu succes!");
-          navigate("/dashboard");
+          navigate("/");
         }, 2000);
       } else {
         setTimeout(() => {

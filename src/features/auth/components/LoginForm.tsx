@@ -3,7 +3,7 @@ import { Checkbox } from "@chakra-ui/checkbox";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { loginAPI } from "../services/AuthService";
+import { useAuth } from "../../../context/useAuth";
 
 interface Props {
   bootMessages: string[];
@@ -32,19 +32,21 @@ const LoginForm: React.FC<Props> = ({
     "idle"
   );
 
+  const { loginUser } = useAuth();
+
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      // Apelul API pentru login
-      const response = await loginAPI(username, password);
+      const response = await loginUser(username, password);
+
       if (response) {
         setBooting(true);
 
         setTimeout(() => {
           setLoginStatus("success");
           toast.success("Login successful!");
-          navigate("/dashboard");
-        }, 2000);
+          navigate("/");
+        }, 2500);
       } else {
         setTimeout(() => {
           setLoginStatus("error");
@@ -98,7 +100,7 @@ const LoginForm: React.FC<Props> = ({
           </label>
           <Input
             type="text"
-            id="username"
+            id="usernameLogin"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             onClick={() => setTerminal(true)}
@@ -114,7 +116,7 @@ const LoginForm: React.FC<Props> = ({
           </label>
           <Input
             type="password"
-            id="password"
+            id="passwordLogin"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             onClick={() => setTerminal(true)}
@@ -183,7 +185,8 @@ const LoginForm: React.FC<Props> = ({
               {">"} {msg}
             </Text>
           ))}
-        {loginStatus === "error" && ">" + "Login failed! Please try again..."}
+        {loginStatus === "error" &&
+          "\n>" + " Login failed! Please try again..."}
         <Box
           as="span"
           bg="#646cff"

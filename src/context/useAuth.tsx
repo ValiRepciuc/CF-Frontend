@@ -11,8 +11,8 @@ type UserContextType = {
     email: string,
     username: string,
     password: string
-  ) => Promise<void>;
-  loginUser: (username: string, password: string) => Promise<void>;
+  ) => Promise<boolean>;
+  loginUser: (username: string, password: string) => Promise<boolean>;
   logoutUser: () => void;
   isLoggedIn: () => boolean;
 };
@@ -50,11 +50,13 @@ export const UserProvider = ({ children }: Props) => {
         };
         setUser(userObj);
         localStorage.setItem("user", JSON.stringify(userObj));
-        toast.success("Te-ai înregistrat cu succes!");
-        navigate("/");
+        return true;
+      } else {
+        return false;
       }
     } catch (error) {
       toast.warning("A apărut o eroare!");
+      return false;
     }
   };
 
@@ -62,17 +64,20 @@ export const UserProvider = ({ children }: Props) => {
     try {
       const res = await loginAPI(username, password);
       if (res) {
+        const { userName, email } = res.data;
         const userObj = {
-          userName: res.data.userName,
-          email: res.data.email,
+          userName: userName,
+          email: email,
         };
         setUser(userObj);
         localStorage.setItem("user", JSON.stringify(userObj));
-        toast.success("Te-ai logat cu succes!");
-        navigate("/");
+        return true;
+      } else {
+        return false;
       }
     } catch (error) {
       toast.warning("A apărut o eroare!");
+      return false;
     }
   };
 
@@ -84,7 +89,7 @@ export const UserProvider = ({ children }: Props) => {
     localStorage.removeItem("user");
     setUser(null);
     toast.success("Te-ai deconectat cu succes!");
-    navigate("/login");
+    navigate("/auth");
   };
 
   return (
