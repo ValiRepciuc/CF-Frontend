@@ -23,7 +23,6 @@ const codeSnippets = [
 
 const Navbar = () => {
   const NAV_COMMANDS = [
-    { cmd: ">_ home()", action: () => navigate("/") },
     { cmd: ">_ events()", action: () => navigate("/events") },
     { cmd: ">_ challenges()", action: () => navigate("/challenges") },
     { cmd: ">_ leaderboard()", action: () => navigate("/leaderboard") },
@@ -73,31 +72,21 @@ const Navbar = () => {
           onCodeClick={handleSnippetClick}
           animate={animate}
         />
-        <Button
-          onClick={logoutUser}
-          bgColor={"#646cff"}
-          _hover={{ bgColor: "#535bf2;" }}
-          _active={{ opacity: 0.8 }}
-        >
-          {">_ challenges"}
-        </Button>
-
-        <Button
-          onClick={logoutUser}
-          bgColor={"#646cff"}
-          _hover={{ bgColor: "#535bf2;" }}
-          _active={{ opacity: 0.8 }}
-        >
-          {"events()"}
-        </Button>
-        <Button
-          onClick={logoutUser}
-          bgColor={"#646cff"}
-          _hover={{ bgColor: "#535bf2;" }}
-          _active={{ opacity: 0.8 }}
-        >
-          {"leaderboard={}"}
-        </Button>
+        <HStack spaceX={2}>
+          {NAV_COMMANDS.map((item) => (
+            <Button
+              key={item.cmd}
+              onClick={item.action}
+              bgColor="#646cff"
+              _hover={{ bgColor: "#535bf2" }}
+              _active={{ opacity: 0.8 }}
+              fontFamily="mono"
+              fontSize="sm"
+            >
+              {item.cmd}
+            </Button>
+          ))}
+        </HStack>
         <Box>
           {isLoggedIn() ? (
             <>
@@ -109,13 +98,6 @@ const Navbar = () => {
                   _active={{ opacity: 0.8 }}
                 >
                   Logout ({user?.userName}){" "}
-                </Button>
-                <Button
-                  bgColor={"#646cff"}
-                  _hover={{ bgColor: "#535bf2;" }}
-                  _active={{ opacity: 0.8 }}
-                >
-                  Profil
                 </Button>
               </HStack>
             </>
