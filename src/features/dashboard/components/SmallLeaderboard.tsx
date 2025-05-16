@@ -1,8 +1,8 @@
-import { Box } from "@chakra-ui/react";
+import { Box, Spinner } from "@chakra-ui/react";
 import { useLeaderboard } from "../hooks/useLeaderboard";
 
 const SmallLeaderboard = () => {
-  const { firstPlace, secondPlace, thirdPlace } = useLeaderboard();
+  const { firstPlace, secondPlace, thirdPlace, isLoading } = useLeaderboard();
   return (
     <Box
       w={{ base: "90%", md: "400px" }}
@@ -30,7 +30,17 @@ const SmallLeaderboard = () => {
         position={"relative"}
       >
         <Box as="pre" textAlign="left" whiteSpace="pre-wrap">
-          {`{\n  "clasament": {\n    "primul": "${firstPlace?.username}",\n    "alDoilea": "${secondPlace?.username}",\n    "alTreilea": "${thirdPlace?.username}"\n  }\n}`}
+          {isLoading ? (
+            <Spinner color="#646cff" />
+          ) : (
+            <>
+              {`{\n  "clasament": {\n    "primul": "${
+                firstPlace?.username ?? "-"
+              }",\n    "alDoilea": "${
+                secondPlace?.username ?? "-"
+              }",\n    "alTreilea": "${thirdPlace?.username ?? "-"}"\n  }\n}`}
+            </>
+          )}
         </Box>
         <Box
           as="span"
