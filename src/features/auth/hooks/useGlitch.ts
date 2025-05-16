@@ -16,7 +16,7 @@ export const useGlitch = () => {
 
     const interval = setInterval(() => {
       setGlitching(true);
-      setFontFamily("VT323");
+      setFontFamily("Nura");
 
       const glitchInterval = setInterval(() => {
         setDisplayText(generateRandomText(8));

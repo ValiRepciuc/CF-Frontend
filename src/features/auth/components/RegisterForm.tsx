@@ -218,6 +218,7 @@ const RegisterForm: React.FC<Props> = ({
           bg={"#646cff"}
           width="full"
           _hover={{ bg: "#c800ff" }}
+          onClick={() => setTerminal(true)}
           disabled={
             !email ||
             !username ||

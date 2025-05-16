@@ -18,10 +18,12 @@ const GlitchLogo: React.FC<GlitchLogoProps> = ({
       left={12}
       fontFamily={fontFamily}
       fontWeight={900}
-      fontSize={glitching ? "2xl" : "5xl"}
+      fontSize={glitching ? "5xl" : "5xl"}
       color={"#646cff"}
       animation={
-        glitching ? "smallShakeLogo 0.5s infinite" : "pulseGlow 2s infinite"
+        glitching
+          ? "smallShakeLogo 0.5s infinite, pulseGlow 2s infinite"
+          : "pulseGlow 2s infinite"
       }
     >
       {displayText}

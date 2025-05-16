@@ -143,6 +143,7 @@ const LoginForm: React.FC<Props> = ({
           bg={"#646cff"}
           width="full"
           _hover={{ bg: "#c800ff" }}
+          onClick={() => setTerminal(true)}
         >
           Login
         </Button>
