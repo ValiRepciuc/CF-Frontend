@@ -9,6 +9,7 @@ import { useEvents } from "../hooks/useEvents";
 import "../styles/authAnimations.css";
 import LoginForm from "../components/LoginForm";
 import GlitchFormWrapper from "../components/GlitchFormWrapper";
+import Footer from "../../../components/Footer/Footer";
 
 const Login = () => {
   const [terminal, setTerminal] = useState<boolean>(false);
@@ -49,7 +50,7 @@ const Login = () => {
         glitching={glitching}
       />
       <Flex
-        height={"100vh"}
+        height={"97vh"}
         alignItems="center"
         justifyContent="center"
         bg={"1a1a1a"}
@@ -82,9 +83,9 @@ const Login = () => {
             onSwitchToLogin={toogleForm}
           />
         </GlitchFormWrapper>
-
         <UpcomingEventCard nextEvent={nextEvent} />
       </Flex>
+      <Footer />
     </Box>
   );
 };

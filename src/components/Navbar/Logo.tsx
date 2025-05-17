@@ -19,13 +19,13 @@ const Logo: React.FC<LogoProps> = ({
       textAlign="center"
       fontFamily="Nura"
       fontWeight={900}
-      fontSize="5xl"
+      fontSize="4xl"
       animation={"pulseGlowNavbar 2s infinite"}
     >
       {displayText}
       <Box
         fontFamily="'Fira Code', monospace"
-        fontSize="sm"
+        fontSize="2xs"
         cursor="pointer"
         onClick={onCodeClick}
         className={animate ? "code-snippet-animate" : ""}

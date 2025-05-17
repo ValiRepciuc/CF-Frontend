@@ -62,8 +62,8 @@ const Navbar = () => {
       zIndex={1000}
       bgColor={"#646cff"}
       color={"whiteAlpha.900"}
-      py={4}
-      px={{ base: 4, md: 12 }}
+      py={2}
+      px={{ base: 4, md: 8 }}
     >
       <Flex justify="space-between" align="center">
         <Logo
@@ -72,7 +72,7 @@ const Navbar = () => {
           onCodeClick={handleSnippetClick}
           animate={animate}
         />
-        <HStack spaceX={2}>
+        <HStack spaceX={4}>
           {NAV_COMMANDS.map((item) => (
             <Button
               key={item.cmd}
@@ -96,6 +96,7 @@ const Navbar = () => {
                   bgColor={"#646cff"}
                   _hover={{ bgColor: "#535bf2;" }}
                   _active={{ opacity: 0.8 }}
+                  fontWeight={900}
                 >
                   Logout ({user?.userName}){" "}
                 </Button>
