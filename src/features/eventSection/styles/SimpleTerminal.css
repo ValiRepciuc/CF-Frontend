@@ -1,0 +1,11 @@
+@keyframes pulseGlowBox {
+  0% {
+    box-shadow: 0 0 0px #646cff;
+  }
+  50% {
+    box-shadow: 0 0 20px #646cff;
+  }
+  100% {
+    box-shadow: 0 0 0px #646cff;
+  }
+}

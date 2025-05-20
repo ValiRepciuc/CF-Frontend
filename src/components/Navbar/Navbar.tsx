@@ -1,9 +1,10 @@
 import { Box, Button, Flex, HStack } from "@chakra-ui/react";
 import Logo from "./Logo";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "../../styles/navbar.css";
-import { useAuth } from "../../context/useAuth";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../context/useAuth";
+import { useEvents } from "../../features/eventSection/hooks/useEvents";
 
 const codeSnippets = [
   "let y = 2025;",
@@ -24,12 +25,29 @@ const codeSnippets = [
 const Navbar = () => {
   const NAV_COMMANDS = [
     { cmd: ">_ events()", action: () => navigate("/events") },
-    { cmd: ">_ challenges()", action: () => navigate("/challenges") },
+    {
+      cmd: ">_ challenges()",
+      action: () => {
+        if (currentEvent) {
+          navigate(`/event/${currentEvent.name}`, {
+            state: { event: currentEvent },
+          });
+        }
+      },
+    },
     { cmd: ">_ leaderboard()", action: () => navigate("/leaderboard") },
     { cmd: ">_ messages.open()", action: () => navigate("/messages") },
     { cmd: ">_ notifications()", action: () => navigate("/notifications") },
     { cmd: ">_ help()", action: () => navigate("/how-it-works") },
   ];
+
+  const { currentEvent } = useEvents();
+
+  useEffect(() => {
+    if (currentEvent) {
+      console.log("Am primit currentEvent:", currentEvent.name);
+    }
+  }, [currentEvent]);
 
   const [index, setIndex] = useState(
     Math.floor(Math.random() * codeSnippets.length)
