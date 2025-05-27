@@ -4,14 +4,24 @@ import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
 import { Event } from "../../eventSection/hooks/useEvents";
 import { useChallenges } from "../hooks/useChallenges";
-import challengeCard from "../components/ChallengeCard";
+import challengeCard from "../components/challengeCard";
 import Footer from "../../../components/Footer/Footer";
+import { useChallengeContext } from "../../../context/useChallenge";
 
 const EventDetails = () => {
   const location = useLocation();
   const event = (location.state as { event: Event })?.event;
 
   const { currentChallenges } = useChallenges(event?.id || "");
+
+  const { setChallenges } = useChallengeContext();
+
+  useEffect(() => {
+    if (currentChallenges.length > 0) {
+      setChallenges(currentChallenges);
+      localStorage.setItem("challenges", JSON.stringify(currentChallenges));
+    }
+  }, [currentChallenges]);
 
   useEffect(() => {
     if (event?.id) {
@@ -65,6 +75,7 @@ const EventDetails = () => {
             {currentChallenges.map((challenge, index) => (
               <Box key={index}>
                 {challengeCard({
+                  id: challenge.id,
                   day: index + 1,
                   title: challenge.title,
                   startDate: challenge.date,

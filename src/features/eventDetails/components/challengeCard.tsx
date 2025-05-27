@@ -1,13 +1,15 @@
 import { Box, Text } from "@chakra-ui/react";
+import { Link as ChakraLink } from "@chakra-ui/react";
 import { Link as RouterLink } from "react-router-dom";
 
 interface ChallengeCardProps {
+  id: string;
   day: number;
   title: string;
   startDate: string;
 }
 
-const ChallengeCard = ({ day, title, startDate }: ChallengeCardProps) => {
+const ChallengeCard = ({ id, day, title, startDate }: ChallengeCardProps) => {
   return (
     <Box
       w="100%"
@@ -39,15 +41,17 @@ const ChallengeCard = ({ day, title, startDate }: ChallengeCardProps) => {
 
         <Text ml={4}>
           {`"title": "`}
-          <Box
+          <ChakraLink
             as={RouterLink}
+            to={`/challenge/${id}`}
+            state={{ challenge: { day, title, startDate } }}
             display="inline"
             cursor="pointer"
             color="purple.700"
             _hover={{ textDecoration: "underline", color: "purple.600" }}
           >
             {title}
-          </Box>
+          </ChakraLink>
           {`",`}
         </Text>
 
