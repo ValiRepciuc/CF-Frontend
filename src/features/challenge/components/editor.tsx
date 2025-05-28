@@ -15,7 +15,7 @@ import {
 import { Select as ChakraSelect } from "@chakra-ui/select";
 import { useSubmission } from "../hooks/useSubmission";
 import { AnimatePresence, motion } from "framer-motion";
-import { useLeaderboard } from "../hooks/useLeaderboard";
+import { useLeaderboardComplete } from "../../leaderboard/hooks/useLeaderboardComplete";
 
 interface EditorProps {
   initialCode: string;
@@ -31,7 +31,7 @@ const editor = ({ initialCode, challengeId, isDisabled }: EditorProps) => {
   const [loading, setLoading] = useState(false);
   const [isOutputVisible, setIsOutputVisible] = useState(false);
 
-  const { userEntry, userPosition } = useLeaderboard();
+  const { userEntry } = useLeaderboardComplete();
 
   const { submissionOutput, loadingSubmission, runSubmission } = useSubmission(
     challengeId || "",
@@ -76,7 +76,7 @@ const editor = ({ initialCode, challengeId, isDisabled }: EditorProps) => {
             Esti pe{" "}
             <strong>
               <Text as={"span"} animation={"pulseGlow 1s infinite ease-in-out"}>
-                locul {userPosition}{" "}
+                locul {userEntry?.rank}{" "}
               </Text>
             </strong>{" "}
             in clasament

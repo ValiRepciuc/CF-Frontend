@@ -18,6 +18,7 @@
     "@chakra-ui/transition": "^2.1.0",
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.0",
+    "@microsoft/signalr": "^8.0.7",
     "@monaco-editor/react": "^4.7.0",
     "axios": "^1.8.4",
     "framer-motion": "^12.9.2",
