@@ -1,4 +1,4 @@
-import { Box, Text, Flex, VStack, HStack } from "@chakra-ui/react";
+import { Box, Text, Flex, VStack } from "@chakra-ui/react";
 import { useParams } from "react-router-dom";
 import { useChallengeContext } from "../../../context/useChallenge";
 import Navbar from "../../../components/Navbar/Navbar";
