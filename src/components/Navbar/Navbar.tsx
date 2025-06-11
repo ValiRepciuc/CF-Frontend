@@ -5,7 +5,7 @@ import "../../styles/navbar.css";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/useAuth";
 import { useEvents } from "../../features/eventSection/hooks/useEvents";
-import { useNotification } from "../../hooks/useNotification";
+import NotificationDropDown from "./NotificationDropDown";
 
 const codeSnippets = [
   "let y = 2025;",
@@ -38,17 +38,10 @@ const Navbar = () => {
     },
     { cmd: ">_ leaderboard()", action: () => navigate("/leaderboard") },
     { cmd: ">_ messages.open()", action: () => navigate("/messages") },
-    {
-      cmd: ">_ notifications()",
-      action: () => console.log("Notifications clicked"),
-    },
     { cmd: ">_ help()", action: () => navigate("/how-it-works") },
   ];
 
   const { currentEvent } = useEvents();
-  const { notification } = useNotification();
-  
-  console.log("Notification:", notification);
 
   useEffect(() => {
     if (currentEvent) {
@@ -112,10 +105,12 @@ const Navbar = () => {
             </Button>
           ))}
         </HStack>
+
         <Box>
           {isLoggedIn() ? (
             <>
               <HStack spaceX={8} align="center">
+                <NotificationDropDown />
                 <Button
                   onClick={logoutUser}
                   bgColor={"#646cff"}
