@@ -41,6 +41,7 @@ const NotificationDropDown = () => {
           as={Box}
           position="relative"
           variant="ghost"
+          _hover={{ bgColor: "#535bf2" }}
           size="lg"
         >
           <IoMdNotificationsOutline size="1.7em" />
@@ -62,7 +63,13 @@ const NotificationDropDown = () => {
       </Menu.Trigger>
 
       <Menu.Positioner>
-        <Menu.Content maxW="300px" p={3} borderRadius="md" boxShadow="lg">
+        <Menu.Content
+          maxW="300px"
+          p={3}
+          borderRadius="md"
+          boxShadow="lg"
+          bgColor={"#646cff"}
+        >
           <Flex justify="space-between" align="center" mb={2}>
             <Text fontSize="md" fontWeight="bold">
               Notificări

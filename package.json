@@ -21,7 +21,7 @@
     "@microsoft/signalr": "^8.0.7",
     "@monaco-editor/react": "^4.7.0",
     "axios": "^1.8.4",
-    "framer-motion": "^12.9.2",
+    "framer-motion": "^12.18.1",
     "motion": "^12.9.2",
     "react": "^18.2.0",
     "react-countup": "^6.5.3",

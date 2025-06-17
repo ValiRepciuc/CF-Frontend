@@ -37,7 +37,7 @@ const Navbar = () => {
       },
     },
     { cmd: ">_ leaderboard()", action: () => navigate("/leaderboard") },
-    { cmd: ">_ messages.open()", action: () => navigate("/messages") },
+    { cmd: ">_ social()", action: () => navigate("/social") },
     { cmd: ">_ help()", action: () => navigate("/how-it-works") },
   ];
 
