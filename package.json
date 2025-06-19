@@ -11,7 +11,6 @@
   },
   "dependencies": {
     "@chakra-ui/checkbox": "^2.3.2",
-    "@chakra-ui/icons": "^2.2.4",
     "@chakra-ui/react": "^3.16.1",
     "@chakra-ui/select": "^2.1.2",
     "@chakra-ui/system": "^2.6.2",

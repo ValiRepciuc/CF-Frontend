@@ -1,4 +1,4 @@
-import { Box, Text, Flex, Button, VStack } from "@chakra-ui/react";
+import { Box, Text, Flex, VStack } from "@chakra-ui/react";
 import { FaCode, FaTrophy, FaUserFriends, FaTerminal } from "react-icons/fa";
 import Navbar from "../components/Navbar/Navbar";
 import Footer from "../components/Footer/Footer";

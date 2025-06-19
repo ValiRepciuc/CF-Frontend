@@ -40,10 +40,24 @@ const editor = ({ initialCode, challengeId, isDisabled }: EditorProps) => {
   );
 
   const languageStartUp: Record<string, string> = {
-    "c++": `cout << "Hello, world!";\n  return 0;\n`,
-    java: ` System.out.println("Hello, world!");\n`,
-    python: `print("Hello, world!")`,
-    javascript: `console.log("Hello, world!");`,
+    "c++": `void solve() {
+      cout << "Hello, world!";
+  }
+  `,
+
+    java: `public static void solve() {
+      System.out.println("Hello, world!");
+  }
+  `,
+
+    python: `def solve():
+      print("Hello, world!")
+  `,
+
+    javascript: `function solve() {
+      console.log("Hello, world!");
+  }
+  `,
   };
 
   const handleRun = () => {

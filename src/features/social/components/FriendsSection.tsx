@@ -178,7 +178,7 @@ const FriendsSection = ({ onStartChat }: FriendsSectionProps) => {
                 Nu ai prieteni adăugați 🫂
               </Text>
               <Text fontSize="md" color="gray.300">
-                Poți adăuga un prieten folosind bara de căutare de mai sus.
+                Poți adăuga un prieten folosind bara de adăugare de mai sus.
               </Text>
             </Flex>
           )}

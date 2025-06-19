@@ -61,6 +61,26 @@ const EventDetails = () => {
         >
           Apasa pe titlu pentru a incepe challenge-ul!
         </Text>
+        <Text
+          textAlign="center"
+          fontSize="sm"
+          fontWeight="medium"
+          fontFamily="mono"
+          color="gray.300"
+          maxW="800px"
+          mx="auto"
+          px={4}
+        >
+          ⚠️ Ține minte! Fiecare provocare are un punctaj dinamic care{" "}
+          <strong>scade cu 1</strong> pentru fiecare rezolvare trimisă. Poți
+          obține un{" "}
+          <span style={{ color: "#646cff", fontWeight: "bold" }}>
+            bonus de viteză
+          </span>
+          :<strong> +10%</strong> dacă reușești din prima, sau{" "}
+          <strong>+5%</strong> dacă reușești din a doua sau a treia încercare.
+          Fii rapid și inspirat! 🚀
+        </Text>
         <Box
           color="green.300"
           fontFamily="mono"

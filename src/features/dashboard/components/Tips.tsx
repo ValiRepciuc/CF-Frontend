@@ -19,7 +19,7 @@ const Tips = () => {
   return (
     <Box
       position="relative"
-      w={{ base: "90%", md: "400px" }}
+      w={{ base: "90%", md: "none" }}
       h="80px"
       overflow="hidden"
       borderRadius="md"

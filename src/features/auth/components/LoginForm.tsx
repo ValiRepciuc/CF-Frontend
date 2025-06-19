@@ -100,6 +100,9 @@ const LoginForm: React.FC<Props> = ({
           </label>
           <Input
             type="text"
+            fontFamily={"Inter"}
+            fontSize={"md"}
+            fontWeight={"bold"}
             id="usernameLogin"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
@@ -117,6 +120,9 @@ const LoginForm: React.FC<Props> = ({
           <Input
             type="password"
             id="passwordLogin"
+            fontFamily={"Inter"}
+            fontSize={"md"}
+            fontWeight={"bold"}
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             onClick={() => setTerminal(true)}

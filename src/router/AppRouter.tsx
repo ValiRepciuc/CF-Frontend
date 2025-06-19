@@ -7,18 +7,68 @@ import Challenge from "../features/challenge/pages/Challenge";
 import Leaderboard from "../features/leaderboard/pages/Leaderboard";
 import Social from "../features/social/pages/Social";
 import HelpMe from "../pages/HelpMe";
+import NotFound from "../pages/NotFound";
+import PrivateRoute from "./PrivateRoute";
 
 const AppRouter = () => {
   return (
     <Routes>
+      {/* Public Routes */}
       <Route path="/" element={<Dashboard />} />
       <Route path="/auth" element={<Auth />} />
-      <Route path="/events" element={<Events />} />
-      <Route path="/event/:eventName" element={<EventDetails />} />
-      <Route path="/challenge/:id" element={<Challenge />} />
-      <Route path="/leaderboard" element={<Leaderboard />} />
-      <Route path="/social" element={<Social />} />
-      <Route path="/how-it-works" element={<HelpMe />} />
+
+      {/* Protected Routes */}
+      <Route
+        path="/events"
+        element={
+          <PrivateRoute>
+            <Events />
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="/event/:eventName"
+        element={
+          <PrivateRoute>
+            <EventDetails />
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="/challenge/:id"
+        element={
+          <PrivateRoute>
+            <Challenge />
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="/leaderboard"
+        element={
+          <PrivateRoute>
+            <Leaderboard />
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="/social"
+        element={
+          <PrivateRoute>
+            <Social />
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="/how-it-works"
+        element={
+          <PrivateRoute>
+            <HelpMe />
+          </PrivateRoute>
+        }
+      />
+
+      {/* wrong route */}
+      <Route path="*" element={<NotFound />} />
     </Routes>
   );
 };

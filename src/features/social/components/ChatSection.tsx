@@ -8,6 +8,7 @@ import { useConversationsSignalR } from "../../../hooks/useConversationsSignalR"
 
 const ChatSection = () => {
   const { conversations, loading, setConversations } = useConversations(); // adaugă set
+  const [searchQuery, setSearchQuery] = useState<string>("");
 
   useConversationsSignalR((updatedConv) => {
     setConversations((prev) => {
@@ -99,26 +100,47 @@ const ChatSection = () => {
               </Box>
             </Box>
           ) : (
-            conversations.map((conv) => (
-              <Button
-                key={conv.id}
-                onClick={() => setConversationId(conv.id)}
-                variant={conv.id === conversationId ? "solid" : "ghost"}
+            <Box display="flex" flexDirection="column" gap={4}>
+              <Input
+                placeholder="Caută conversații..."
+                value={searchQuery}
+                font={"Inter"}
+                fontSize={"xl"}
+                fontWeight={"bold"}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                bg="#1f1f1f"
                 color="white"
-                bg={conv.id === conversationId ? "#646cff" : "#1f1f1f"}
-                fontWeight="bold"
-                fontSize="md"
-                _hover={{ bg: "#5355c4" }}
-                border="1px solid #646cff30"
-                borderRadius="md"
-                textAlign="left"
-                justifyContent="flex-start"
-                px={4}
-                py={3}
-              >
-                {conv.otherUsername}
-              </Button>
-            ))
+                border="1px solid #646cff"
+                _focus={{ borderColor: "#646cff" }}
+                mb={2}
+              />
+              {conversations
+                .filter((conv) =>
+                  conv.otherUsername
+                    .toLowerCase()
+                    .includes(searchQuery.toLowerCase())
+                )
+                .map((conv) => (
+                  <Button
+                    key={conv.id}
+                    onClick={() => setConversationId(conv.id)}
+                    variant={conv.id === conversationId ? "solid" : "ghost"}
+                    color="white"
+                    bg={conv.id === conversationId ? "#646cff" : "#1f1f1f"}
+                    fontWeight="bold"
+                    fontSize="md"
+                    _hover={{ bg: "#5355c4" }}
+                    border="1px solid #646cff30"
+                    borderRadius="md"
+                    textAlign="left"
+                    justifyContent="flex-start"
+                    px={4}
+                    py={3}
+                  >
+                    {conv.otherUsername}
+                  </Button>
+                ))}
+            </Box>
           )}
         </Box>
         <Flex

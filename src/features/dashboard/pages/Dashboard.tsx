@@ -14,8 +14,7 @@ const Dashboard = () => {
   return (
     <Box bg="#121212" minH="100vh">
       <Navbar />
-
-      <VStack spaceX={8} spaceY={8} py={36}>
+      <VStack spaceY={8} pt={24}>
         <Text
           fontSize="2xl"
           fontWeight="bold"
@@ -66,8 +65,8 @@ const Dashboard = () => {
           </Box>
           <TypingConsole />
         </VStack>
+        <Footer />
       </VStack>
-      <Footer />
     </Box>
   );
 };

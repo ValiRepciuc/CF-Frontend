@@ -137,6 +137,9 @@ const RegisterForm: React.FC<Props> = ({
           <Input
             type="text"
             id="username"
+            fontFamily={"Inter"}
+            fontSize={"md"}
+            fontWeight={"bold"}
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             onClick={() => setTerminal(true)}
@@ -153,6 +156,9 @@ const RegisterForm: React.FC<Props> = ({
           <Input
             type="text"
             id="username"
+            fontFamily={"Inter"}
+            fontSize={"md"}
+            fontWeight={"bold"}
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             onClick={() => setTerminal(true)}
@@ -169,6 +175,9 @@ const RegisterForm: React.FC<Props> = ({
           <Input
             type="password"
             id="password"
+            fontFamily={"Inter"}
+            fontSize={"md"}
+            fontWeight={"bold"}
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             onClick={() => setTerminal(true)}
@@ -184,6 +193,9 @@ const RegisterForm: React.FC<Props> = ({
             <Input
               type="password"
               id="confirmPassword"
+              fontFamily={"Inter"}
+              fontSize={"md"}
+              fontWeight={"bold"}
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
               onClick={() => setTerminal(true)}

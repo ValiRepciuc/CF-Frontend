@@ -2,9 +2,11 @@ import { Box, Text, Flex } from "@chakra-ui/react";
 import Navbar from "../../../components/Navbar/Navbar";
 import Footer from "../../../components/Footer/Footer";
 import { useLeaderboardComplete } from "../hooks/useLeaderboardComplete";
+import { useUserAchievements } from "../hooks/useUserAchievement";
 
 const Leaderboard = () => {
   const { leaderboard, userEntry } = useLeaderboardComplete();
+  const { achievements, loading } = useUserAchievements();
 
   return (
     <Box bgGradient="linear(to-b, #1a1a1a, #0d0d0d)">
@@ -83,6 +85,35 @@ const Leaderboard = () => {
                 <Text>
                   Poziție: <strong>#{userEntry.rank}</strong>
                 </Text>
+
+                <Box mt={6}>
+                  <Text color="whiteAlpha.700">// Achievements obținute</Text>
+                  {loading ? (
+                    <Text color="gray.400">Se încarcă...</Text>
+                  ) : achievements.length === 0 ? (
+                    <Text color="red.300">
+                      Nu ai niciun achievement! (încă)
+                    </Text>
+                  ) : (
+                    achievements.map((ach, idx) => (
+                      <Box
+                        key={idx}
+                        mt={2}
+                        p={2}
+                        border="1px solid #646cff"
+                        borderRadius="md"
+                        _hover={{ bg: "#1e1e1e" }}
+                      >
+                        <Text fontSize="sm" color="#646cff">
+                          {ach.iconUrl} {ach.name}
+                        </Text>
+                        <Text fontSize="xs" color="whiteAlpha.700">
+                          {ach.description}
+                        </Text>
+                      </Box>
+                    ))
+                  )}
+                </Box>
               </>
             ) : (
               <Text color="red.300">Nu ești logat sau nu ai punctaj.</Text>

@@ -12,7 +12,7 @@ const Footer = () => {
       justifyContent="center"
       fontFamily="Nura"
       fontWeight={900}
-      fontSize="xl"
+      fontSize={{base: "sm", md: "xl"}}
       bg="gray.100"
       mt="auto"
       bgColor={"#646cff"}
